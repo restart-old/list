@@ -41,9 +41,32 @@ func (w *WhiteList) Add(username string) error {
 	return os.WriteFile(w.filepath, b, 727)
 }
 
+// Remove removes the username provided from the whitelist
+func (w *WhiteList) Remove(username string) error {
+	if !w.Whitelisted(username) {
+		return nil
+	}
+	w.List = remove(username, w.List)
+	b, err := json.MarshalIndent(w, "", "\t")
+	if err != nil {
+		return err
+	}
+	return os.WriteFile(w.filepath, b, 727)
+}
+
 // Whitelisted returns a bool of if the player is whitelisted or not
 func (w *WhiteList) Whitelisted(username string) bool {
 	return username != "" && whitelisted(username, w.List)
+}
+
+// remove...
+func remove(username string, list []string) []string {
+	for i, u := range list {
+		if strings.ToLower(u) == strings.ToLower(username) {
+			return append(list[:i], list[i+1:]...)
+		}
+	}
+	return list
 }
 
 // whitelisted...
