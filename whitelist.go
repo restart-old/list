@@ -10,6 +10,7 @@ import (
 type WhiteList struct {
 	filepath string
 	List     []string
+	Enabled  bool
 }
 
 // New reads the file provided and returns a new *WhiteList
