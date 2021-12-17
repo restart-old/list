@@ -39,7 +39,7 @@ func (w *WhiteList) Add(username string) error {
 	if err != nil {
 		return err
 	}
-	return os.WriteFile(w.filepath, b, 727)
+	return os.WriteFile(w.filepath, b, 0777)
 }
 
 // Remove removes the username provided from the whitelist
@@ -52,7 +52,7 @@ func (w *WhiteList) Remove(username string) error {
 	if err != nil {
 		return err
 	}
-	return os.WriteFile(w.filepath, b, 727)
+	return os.WriteFile(w.filepath, b, 0777)
 }
 
 // Whitelisted returns a bool of if the player is whitelisted or not
@@ -100,7 +100,7 @@ func checkFile(filepath string) error {
 // marshalAndWrite
 func marshalAndWrite(filepath string) error {
 	b, _ := json.MarshalIndent(WhiteList{List: []string{}}, "", "\t")
-	err := os.WriteFile(filepath, b, 727)
+	err := os.WriteFile(filepath, b, 0777)
 	if err != nil {
 		return err
 	}
