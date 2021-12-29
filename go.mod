@@ -6,7 +6,7 @@ require (
 	github.com/RestartFU/gophig v0.0.0-20211217030855-45df7ce19925 // indirect
 	github.com/brentp/intintmap v0.0.0-20190211203843-30dc0ade9af9 // indirect
 	github.com/cespare/xxhash v1.1.0 // indirect
-	github.com/df-mc/dragonfly v0.4.3-0.20211219122229-c554b85cd881 // indirect
+	github.com/df-mc/dragonfly v0.4.3-0.20211228034935-5c6150017867 // indirect
 	github.com/df-mc/goleveldb v1.1.9 // indirect
 	github.com/go-gl/mathgl v1.0.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
