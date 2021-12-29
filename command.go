@@ -2,14 +2,14 @@ package whitelist
 
 import "github.com/df-mc/dragonfly/server/cmd"
 
-func NewRunnable(w *WhiteList) *Command { return &Command{whitelist: w} }
+func NewRunnable(w *WhiteList) Command { return Command{whitelist: w} }
 
 type Command struct {
 	whitelist *WhiteList
 	Status    status
 }
 
-func (c *Command) Run(src cmd.Source, o *cmd.Output) {
+func (c Command) Run(src cmd.Source, o *cmd.Output) {
 	switch string(c.Status) {
 	case "enable", "on":
 		c.whitelist.Enabled = true
