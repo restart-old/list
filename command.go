@@ -2,7 +2,7 @@ package whitelist
 
 import "github.com/df-mc/dragonfly/server/cmd"
 
-func NewRunnable(w *WhiteList) cmd.Runnable { return &Command{whitelist: w} }
+func NewRunnable(w *WhiteList) *Command { return &Command{whitelist: w} }
 
 type Command struct {
 	whitelist *WhiteList
