@@ -12,9 +12,17 @@ type Command struct {
 func (c Command) Run(src cmd.Source, o *cmd.Output) {
 	switch string(c.Status) {
 	case "enable", "on":
+		if c.whitelist.Enabled {
+			o.Print("server is already whitelisted")
+			return
+		}
 		c.whitelist.Enabled = true
 		o.Print("server is now whitelisted")
 	case "disable", "off":
+		if !c.whitelist.Enabled {
+			o.Print("server is not whitelisted")
+			return
+		}
 		c.whitelist.Enabled = false
 		o.Print("server is no longer whitelisted")
 	default:
