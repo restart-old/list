@@ -13,10 +13,10 @@ func (c Command) Run(src cmd.Source, o *cmd.Output) {
 	switch string(c.Status) {
 	case "enable", "on":
 		c.whitelist.Enabled = true
-		o.Print("server is no longer whitelisted")
+		o.Print("server is now whitelisted")
 	case "disable", "off":
 		c.whitelist.Enabled = false
-		o.Print("server is now whitelisted")
+		o.Print("server is no longer whitelisted")
 	default:
 		o.Printf("'%s' is not a valid argument for this command!", c.Status)
 	}
