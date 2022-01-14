@@ -4,7 +4,9 @@ import (
 	"github.com/df-mc/dragonfly/server/cmd"
 )
 
-func NewRunnable(w *List, allower func(src cmd.Source) bool) Command { return Command{whitelist: w} }
+func NewRunnable(w *List, allower func(src cmd.Source) bool) Command {
+	return Command{whitelist: w, allower: allower}
+}
 
 type Command struct {
 	whitelist *List
