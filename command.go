@@ -1,11 +1,14 @@
 package whitelist
 
-import "github.com/df-mc/dragonfly/server/cmd"
+import (
+	"github.com/df-mc/dragonfly/server/cmd"
+)
 
-func NewRunnable(w *WhiteList) Command { return Command{whitelist: w} }
+func NewRunnable(w *List, allower func(src cmd.Source) bool) Command { return Command{whitelist: w} }
 
 type Command struct {
-	whitelist *WhiteList
+	whitelist *List
+	allower   func(src cmd.Source) bool
 	Status    status
 }
 
@@ -29,6 +32,8 @@ func (c Command) Run(src cmd.Source, o *cmd.Output) {
 		o.Printf("'%s' is not a valid argument for this command!", c.Status)
 	}
 }
+
+func (c Command) Allow(src cmd.Source) bool { return c.allower(src) }
 
 type status string
 

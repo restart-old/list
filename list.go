@@ -5,7 +5,7 @@ import (
 	"sync"
 )
 
-type WhiteList struct {
+type List struct {
 	settings *Settings
 	cMutex   sync.RWMutex
 
@@ -13,11 +13,11 @@ type WhiteList struct {
 	Enabled bool
 }
 
-func New(settings *Settings) (*WhiteList, error) {
-	whitelist := &WhiteList{settings: settings}
+func New(settings *Settings) (*List, error) {
+	whitelist := &List{settings: settings}
 
 	if err := settings.Gophig.GetConf(whitelist); os.IsNotExist(err) {
-		if err = settings.Gophig.SetConf(&WhiteList{List: make([]string, 0), Enabled: true}); err != nil {
+		if err = settings.Gophig.SetConf(&List{List: make([]string, 0), Enabled: true}); err != nil {
 			return whitelist, err
 		}
 		if err = settings.Gophig.GetConf(whitelist); err != nil {
@@ -28,8 +28,8 @@ func New(settings *Settings) (*WhiteList, error) {
 }
 
 // Add adds a new username to the whitelist
-func (w *WhiteList) Add(username string) error {
-	if !w.Whitelisted(username) {
+func (w *List) Add(username string) error {
+	if !w.Listed(username) {
 		if w.settings.CacheOnly {
 			w.addCache(username)
 			return nil
@@ -40,8 +40,8 @@ func (w *WhiteList) Add(username string) error {
 }
 
 // Remove removes the username provided from the whitelist
-func (w *WhiteList) Remove(username string) error {
-	if w.Whitelisted(username) {
+func (w *List) Remove(username string) error {
+	if w.Listed(username) {
 		if w.settings.CacheOnly {
 			w.removeCache(username)
 			return nil
@@ -52,16 +52,16 @@ func (w *WhiteList) Remove(username string) error {
 }
 
 // Whitelisted returns a bool of if the player is whitelisted or not
-func (w *WhiteList) Whitelisted(username string) bool {
+func (w *List) Listed(username string) bool {
 	if username == "" {
 		return false
 	}
 	if w.settings.CacheOnly {
-		return w.whitelistedCache(username)
+		return w.listedCache(username)
 	}
-	return w.whitelisted(username)
+	return w.listed(username)
 }
 
-func (w *WhiteList) Close() error {
+func (w *List) Close() error {
 	return w.close()
 }

@@ -4,17 +4,17 @@ import (
 	"strings"
 )
 
-func (w *WhiteList) addCache(username string) {
+func (w *List) addCache(username string) {
 	w.cMutex.Lock()
 	defer w.cMutex.Unlock()
 	w.List = append(w.List, username)
 }
-func (w *WhiteList) add(username string) error {
+func (w *List) add(username string) error {
 	w.addCache(username)
 	return w.settings.Gophig.SetConf(w)
 }
 
-func (w *WhiteList) removeCache(username string) {
+func (w *List) removeCache(username string) {
 	w.cMutex.Lock()
 	defer w.cMutex.Unlock()
 	for i, u := range w.List {
@@ -23,12 +23,12 @@ func (w *WhiteList) removeCache(username string) {
 		}
 	}
 }
-func (w *WhiteList) remove(username string) error {
+func (w *List) remove(username string) error {
 	w.removeCache(username)
 	return w.settings.Gophig.SetConf(w)
 }
 
-func (w *WhiteList) whitelistedCache(username string) bool {
+func (w *List) listedCache(username string) bool {
 	w.cMutex.Lock()
 	defer w.cMutex.Unlock()
 	for _, u := range w.List {
@@ -39,15 +39,15 @@ func (w *WhiteList) whitelistedCache(username string) bool {
 	return false
 }
 
-func (w *WhiteList) whitelisted(username string) bool {
+func (w *List) listed(username string) bool {
 	err := w.settings.Gophig.GetConf(w)
-	return err == nil && w.whitelistedCache(username)
+	return err == nil && w.listedCache(username)
 }
 
-func (w *WhiteList) closeCache() {
+func (w *List) closeCache() {
 	w = nil
 }
-func (w *WhiteList) close() error {
+func (w *List) close() error {
 	err := w.settings.Gophig.SetConf(w)
 	w.closeCache()
 	return err
