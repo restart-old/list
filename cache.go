@@ -1,4 +1,4 @@
-package whitelist
+package list
 
 import (
 	"strings"
